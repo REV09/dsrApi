@@ -23,7 +23,7 @@ def get_catalogo(idRegistro: str):
         return result
 
 @catalogo.post('/catalogo', response_model=Catalogo,tags=["Catalogo"])
-def addRegistro(registro: Catalogo):
+def add_catalogo(registro: Catalogo):
     conexion = conexionDB()
     result = conexion.execute(catalogos.insert().values(registro.dict()))
     conexion.close()
@@ -39,3 +39,17 @@ def delete_catalogo(idRegistro: str):
         return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail="catalogo not found")
+
+@catalogo.put('/catalogo/{idRegistro}', response_model=Catalogo, tags=["Catalogo"])
+def update_catalogo(catalogo_id: str,catalagoUpdate: Catalogo):
+    conexion = conexionDB()
+    result = conexion.execute(catalogos.update().values(
+        idRegistro = catalogo_id,
+        modelo = catalagoUpdate.modelo
+    ).where(catalogos.c.idRegistro == catalogo_id))
+    conexion.close()
+    if result:
+        catalagoUpdate.idRegistro = catalogo_id
+        return catalagoUpdate.dict()
+
+    raise HTTPException(status_code=404, detail="Catalogo not found")
