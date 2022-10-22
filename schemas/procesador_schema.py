@@ -12,7 +12,7 @@ procesadores = Table('procesador', meta,
                 Column('numeroHilos', Integer),
                 Column('velocidadMaxima', DECIMAL),
                 Column('velocidadMinima', DECIMAL),
-                Column('litografia', String(45)),
+                Column('litografia', Integer),
                 )
 
 engine = motor()

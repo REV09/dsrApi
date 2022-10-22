@@ -11,4 +11,4 @@ class Procesador(BaseModel):
     numeroHilos: int
     velocidadMaxima: float
     velocidadMinima: float
-    litografia: str
+    litografia: int

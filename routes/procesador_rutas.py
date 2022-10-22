@@ -6,7 +6,6 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 procesador = APIRouter()
 
-#Test
 @procesador.get('/procesador/{idRegistro}', response_model=Procesador, tags=['Procesador'])
 def get_procesador(idRegistro: str):
     conexion = conexionDB()
@@ -15,7 +14,6 @@ def get_procesador(idRegistro: str):
     if resultado:
         return resultado
 
-#Test
 @procesador.post('/procesador', response_model=Procesador, tags=['Procesador'])
 def add_procesador(procesador: Procesador):
     conexion = conexionDB()
@@ -24,7 +22,6 @@ def add_procesador(procesador: Procesador):
     if resultado: 
         return procesador.dict()
 
-#Test
 @procesador.delete('/procesador/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Procesador'])
 def delete_procesador(idRegistro: str):
     conexion = conexionDB()
@@ -35,8 +32,7 @@ def delete_procesador(idRegistro: str):
 
     raise HTTPException(status_code= 404, detail='procesador no encontrado')
 
-#Test
-procesador.put('/procesador/{idRegistro}', response_model=Procesador, tags=['Procesador'])
+@procesador.put('/procesador/{idRegistro}', response_model=Procesador, tags=['Procesador'])
 def update_procesador(procesador_id: str, procesadorActualizado: Procesador):
     conexion = conexionDB()
     resultado = conexion.execute(procesadores.update().values(
