@@ -6,7 +6,6 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 tarjetaVideo = APIRouter()
 
-#Test
 @tarjetaVideo.get('/tarjetaDeVideo/{idRegistro}', response_model=TarjetaVideo, tags=['Tarjeta de video'])
 def get_tarjetaVideo(idRegistro: str):
     conexion = conexionDB()
@@ -15,7 +14,6 @@ def get_tarjetaVideo(idRegistro: str):
     if resultado:
         return resultado
 
-#Test
 @tarjetaVideo.post('/tarjetaDeVideo/', response_model=TarjetaVideo, tags=['Tarjeta de video'])
 def add_tarjetaVideo(tarjetaVideo: TarjetaVideo):
     conexion = conexionDB()
@@ -24,7 +22,6 @@ def add_tarjetaVideo(tarjetaVideo: TarjetaVideo):
     if resultado:
         return tarjetaVideo.dict()
 
-#Test
 @tarjetaVideo.delete('/tarjetaDeVideo/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Tarjeta de video'])
 def delete_tarjetaVideo(idRegistro: str):
     conexion = conexionDB()
@@ -35,7 +32,6 @@ def delete_tarjetaVideo(idRegistro: str):
 
     raise HTTPException(status_code=404, detail='Tarjeta de video no encontrada')
 
-#Test
 @tarjetaVideo.put('/tarjetaDeVideo/{idRegistro}', response_model=TarjetaVideo, tags=['Tarjeta de video'])
 def update_tarjetaVideo(tarjeta_id: str, tarjetaActualizada: TarjetaVideo):
     conexion = conexionDB()
