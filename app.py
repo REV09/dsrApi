@@ -4,6 +4,7 @@ from routes.memoriaRam_routes import memoriaRam
 from routes.catalogo_routes import catalogo
 from routes.procesador_rutas import procesador
 from routes.tarjeta_de_video_rutas import tarjetaVideo
+from routes.pantalla_rutas import pantalla
 
 app = FastAPI(
     title='Laptop API DSR',
@@ -36,3 +37,4 @@ app.include_router(memoriaRam)
 app.include_router(catalogo)
 app.include_router(procesador)
 app.include_router(tarjetaVideo)
+app.include_router(pantalla)
