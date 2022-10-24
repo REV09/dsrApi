@@ -6,7 +6,6 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 almacenamiento = APIRouter()
 
-#Test
 @almacenamiento.get('/almacenamiento/{idRegistro}', response_model=Almacenamiento, tags=['Almacenamiento'])
 def get_almacenamiento(idRegistro: str):
     conexion = conexionDB()
@@ -15,7 +14,6 @@ def get_almacenamiento(idRegistro: str):
     if resultado:
         return resultado
 
-#Test
 @almacenamiento.post('/almacenamiento', response_model=Almacenamiento, tags=['Almacenamiento'])
 def add_almacenamiento(almacenamiento: Almacenamiento):
     conexion = conexionDB()
@@ -24,7 +22,6 @@ def add_almacenamiento(almacenamiento: Almacenamiento):
     if resultado:
         return almacenamiento.dict()
 
-#Test
 @almacenamiento.delete('/almacenamiento/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Almacenamiento'])
 def delete_almacenamiento(idRegistro: str):
     conexion = conexionDB()
@@ -35,7 +32,6 @@ def delete_almacenamiento(idRegistro: str):
 
     raise HTTPException(status_code=404, detail='Almacenamiento no encontrado')
 
-#Test
 @almacenamiento.put('/almacenamiento/{idRegistro}', response_model=Almacenamiento, tags=['Almacenamiento'])
 def update_almacenamiento(almacenamiento_id: str, almacenamientoActualizado: Almacenamiento):
     conexion = conexionDB()

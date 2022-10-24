@@ -5,6 +5,7 @@ from routes.catalogo_routes import catalogo
 from routes.procesador_rutas import procesador
 from routes.tarjeta_de_video_rutas import tarjetaVideo
 from routes.pantalla_rutas import pantalla
+from routes.almacenamiento_rutas import almacenamiento
 
 app = FastAPI(
     title='Laptop API DSR',
@@ -28,6 +29,14 @@ app = FastAPI(
     {
         'name' : 'Tarjeta de video',
         'description' : 'Tarjeta de video routes CRUD'
+    },
+    {
+        'name' : 'Pantalla',
+        'description' : 'Pantalla routes CRUD'
+    },
+    {
+        'name' : 'Almacenamiento',
+        'description' : 'Almacenamiento routes CRUD'
     }
     ]
 )
@@ -38,3 +47,4 @@ app.include_router(catalogo)
 app.include_router(procesador)
 app.include_router(tarjetaVideo)
 app.include_router(pantalla)
+app.include_router(almacenamiento)
