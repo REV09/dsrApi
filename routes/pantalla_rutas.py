@@ -6,7 +6,6 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 pantalla = APIRouter()
 
-#Test
 @pantalla.post('/pantalla', response_model=Pantalla, tags=['Pantalla'])
 def add_pantalla(pantalla: Pantalla):
     conexion = conexionDB()
@@ -15,16 +14,14 @@ def add_pantalla(pantalla: Pantalla):
     if resultado:
         return pantalla.dict()
 
-#Test
 @pantalla.get('/pantalla/{idRegistro}', response_model=Pantalla, tags=['Pantalla'])
 def get_pantalla(idRegistro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(pantallas.select().where(pantallas.c.idRegistro)).first()
+    resultado = conexion.execute(pantallas.select().where(pantallas.c.idRegistro == idRegistro)).first()
     conexion.close()
     if resultado:
         return resultado
 
-#Test
 @pantalla.delete('/pantalla/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Pantalla'])
 def delete_pantalla(idRegistro: str):
     conexion = conexionDB()
@@ -35,8 +32,7 @@ def delete_pantalla(idRegistro: str):
 
     raise HTTPException(status_code=404, detail='pantalla no encontrada')
 
-#Test
-@pantalla.put('/pantalla/{idRegistro}', response_model=Pantalla, tags=['Pantallla'])
+@pantalla.put('/pantalla/{idRegistro}', response_model=Pantalla, tags=['Pantalla'])
 def update_pantalla(pantalla_id: str, pantallaActualizada: Pantalla):
     conexion = conexionDB()
     resultado = conexion.execute(pantallas.update().values(
