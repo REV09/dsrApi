@@ -6,7 +6,7 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 ssd = APIRouter()
 
-#Test
+#TODO Test
 @ssd.get('/ssd/{idRegistro}', response_model=Ssd, tags=['SSD'])
 def get_ssd(idRegistro: str):
     conexion = conexionDB()
@@ -15,7 +15,7 @@ def get_ssd(idRegistro: str):
     if resultado:
         return resultado
 
-#Test
+#TODO Test
 @ssd.post('/ssd', response_model=Ssd, tags=['SSD'])
 def add_ssd(ssd: Ssd):
     conexion = conexionDB()
@@ -24,7 +24,7 @@ def add_ssd(ssd: Ssd):
     if resultado:
         return ssd.dict()
 
-#Test
+#TODO Test
 @ssd.delete('/ssd/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['SSD'])
 def delete_ssd(idRegistro: str):
     conexion = conexionDB()
@@ -35,7 +35,7 @@ def delete_ssd(idRegistro: str):
 
     raise HTTPException(status_code=404, detail='SSD no encontrado')
 
-#Test
+#TODO Test
 @ssd.put('/ssd/{idRegistro}', response_model=Ssd, tags=['SSD'])
 def update_ssd(ssd_id: str, ssdActualizado: Ssd):
     conexion = conexionDB()
