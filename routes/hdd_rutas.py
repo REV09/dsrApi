@@ -6,7 +6,6 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 hdd = APIRouter()
 
-#TODO Test
 @hdd.get('/hdd/{idRegistro}', response_model=Hdd, tags=['HDD'])
 def get_hdd(idRegistro: str):
     conexion = conexionDB()
@@ -15,7 +14,6 @@ def get_hdd(idRegistro: str):
     if resultado:
         return resultado
 
-#TODO Test
 @hdd.post('/hdd', response_model=Hdd, tags=['HDD'])
 def add_hdd(hdd: Hdd):
     conexion = conexionDB()
@@ -24,7 +22,6 @@ def add_hdd(hdd: Hdd):
     if resultado:
         return hdd.dict()
 
-#TODO Test
 @hdd.delete('/hdd/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['HDD'])
 def delete_hdd(idRegistro: str):
     conexion = conexionDB()
@@ -35,12 +32,13 @@ def delete_hdd(idRegistro: str):
 
     raise HTTPException(status_code=404, detail='HDD no encontrado')
 
-#TODO Test
-@hdd.put('/ssd/{idRegistro}', response_model=Hdd, tags=['HDD'])
+@hdd.put('/hdd/{idRegistro}', response_model=Hdd, tags=['HDD'])
 def update_hdd(hdd_id: str, hddActualizado: Hdd):
     conexion = conexionDB()
     resultado = conexion.execute(hdds.update().values(
         idRegistro = hdd_id,
+        marca = hddActualizado.marca,
+        modelo = hddActualizado.modelo,
         capacidad = hddActualizado.capacidad,
         interfaz = hddActualizado.interfaz,
         cache = hddActualizado.cache,

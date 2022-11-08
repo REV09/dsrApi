@@ -6,6 +6,8 @@ meta = MetaData()
 
 hdds = Table('hdd', meta,
         Column('idRegistro', String(50), primary_key=True),
+        Column('marca', String(20)),
+        Column('modelo', String(45)),
         Column('capacidad', Integer),
         Column('interfaz', String(10)),
         Column('cache', Integer),

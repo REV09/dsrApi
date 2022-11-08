@@ -6,6 +6,9 @@ from routes.procesador_rutas import procesador
 from routes.tarjeta_de_video_rutas import tarjetaVideo
 from routes.pantalla_rutas import pantalla
 from routes.almacenamiento_rutas import almacenamiento
+from routes.hdd_rutas import hdd
+from routes.ssd_rutas import ssd
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title='Laptop API DSR',
@@ -37,8 +40,26 @@ app = FastAPI(
     {
         'name' : 'Almacenamiento',
         'description' : 'Almacenamiento routes CRUD'
+    },
+    {
+        'name' : 'HDD',
+        'description' : 'HDD routes CRUD'
+    },
+    {
+        'name' : 'SSD',
+        'description' : 'SSD routes CRUD'
     }
     ]
+)
+
+origins = ['*']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
 )
 
 app.include_router(laptop)
@@ -48,3 +69,5 @@ app.include_router(procesador)
 app.include_router(tarjetaVideo)
 app.include_router(pantalla)
 app.include_router(almacenamiento)
+app.include_router(hdd)
+app.include_router(ssd)

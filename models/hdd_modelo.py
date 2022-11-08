@@ -2,8 +2,10 @@ from pydantic import BaseModel
 
 class Hdd(BaseModel):
     idRegistro: str
-    capacidad: str
+    marca: str
+    modelo: str
+    capacidad: int
     interfaz: str
-    cache: str
+    cache: int
     revoluciones: int
     tamanio: str
