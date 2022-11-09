@@ -8,7 +8,6 @@ from routes.pantalla_rutas import pantalla
 from routes.almacenamiento_rutas import almacenamiento
 from routes.hdd_rutas import hdd
 from routes.ssd_rutas import ssd
-from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title='Laptop API DSR',
@@ -53,14 +52,6 @@ app = FastAPI(
 )
 
 origins = ['*']
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*']
-)
 
 app.include_router(laptop)
 app.include_router(memoriaRam)
