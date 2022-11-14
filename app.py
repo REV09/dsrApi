@@ -8,6 +8,7 @@ from routes.pantalla_rutas import pantalla
 from routes.almacenamiento_rutas import almacenamiento
 from routes.hdd_rutas import hdd
 from routes.ssd_rutas import ssd
+from routes.usuario_rutas import usuario
 
 app = FastAPI(
     title='Laptop API DSR',
@@ -47,11 +48,13 @@ app = FastAPI(
     {
         'name' : 'SSD',
         'description' : 'SSD routes CRUD'
+    },
+    {
+        'name' : 'Usuario',
+        'description' : 'Usuario routes CRUD'
     }
     ]
 )
-
-origins = ['*']
 
 app.include_router(laptop)
 app.include_router(memoriaRam)
@@ -62,3 +65,4 @@ app.include_router(pantalla)
 app.include_router(almacenamiento)
 app.include_router(hdd)
 app.include_router(ssd)
+app.include_router(usuario)
