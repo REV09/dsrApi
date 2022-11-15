@@ -16,8 +16,7 @@ def get_usuario(nombreUsuario: str):
     if resultado:
         usuarioObtenido = dict(resultado)
         usuarioObtenido["contrasena"] = desencriptar_mensaje(usuarioObtenido['contrasena'], llaveSeguridad)
-        return usuarioObtenido
-        
+        return usuarioObtenido        
 
 @usuario.post('/usuario', response_model=Usuario, tags=["Usuario"])
 def add_usuario(usuario: Usuario):

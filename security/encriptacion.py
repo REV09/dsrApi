@@ -11,6 +11,7 @@ def generar_llave():
         key_file.write(key)
 
 def cargar_llave():
+    
     '''
     Carga la llave de encriptado/desencriptado
     '''
