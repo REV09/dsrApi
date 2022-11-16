@@ -5,7 +5,7 @@ from config.db import motor
 
 meta = MetaData()
 
-Laptops = Table("laptop", meta, 
+laptops = Table("laptop", meta, 
         Column("idRegistro", String(50), primary_key=True),
         Column("modelo", String(45)),
         Column("memoriaRam", String(30)),

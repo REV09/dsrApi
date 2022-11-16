@@ -14,10 +14,10 @@ def get_catalogos():
     conexion.close()
     return resultSet
 
-@catalogo.get('/catalogo/{idRegistro}', response_model=Catalogo,tags=["Catalogo"])
-def get_catalogo(idRegistro: str):
+@catalogo.get('/catalogo/{id_registro}', response_model=Catalogo,tags=["Catalogo"])
+def get_catalogo(id_registro: str):
     conexion = conexionDB()
-    result = conexion.execute(catalogos.select().where(catalogos.c.idRegistro == idRegistro)).first()
+    result = conexion.execute(catalogos.select().where(catalogos.c.idRegistro == id_registro)).first()
     conexion.close()
     if result:
         return result
@@ -30,26 +30,26 @@ def add_catalogo(registro: Catalogo):
     if result:
         return registro.dict()
 
-@catalogo.delete('/catalogo/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=["Catalogo"])
-def delete_catalogo(idRegistro: str):
+@catalogo.delete('/catalogo/{id_registro}', status_code=HTTP_204_NO_CONTENT, tags=["Catalogo"])
+def delete_catalogo(id_registro: str):
     conexion = conexionDB()
-    result = conexion.execute(catalogos.delete().where(catalogos.c.idRegistro == idRegistro))
+    result = conexion.execute(catalogos.delete().where(catalogos.c.idRegistro == id_registro))
     conexion.close()
     if result:
         return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail="catalogo not found")
 
-@catalogo.put('/catalogo/{idRegistro}', response_model=Catalogo, tags=["Catalogo"])
-def update_catalogo(catalogo_id: str,catalagoUpdate: Catalogo):
+@catalogo.put('/catalogo/{id_registro}', response_model=Catalogo, tags=["Catalogo"])
+def update_catalogo(catalogo_id: str, catalago_actualizado: Catalogo):
     conexion = conexionDB()
     result = conexion.execute(catalogos.update().values(
         idRegistro = catalogo_id,
-        modelo = catalagoUpdate.modelo
+        modelo = catalago_actualizado.modelo
     ).where(catalogos.c.idRegistro == catalogo_id))
     conexion.close()
     if result:
-        catalagoUpdate.idRegistro = catalogo_id
-        return catalagoUpdate.dict()
+        catalago_actualizado.idRegistro = catalogo_id
+        return catalago_actualizado.dict()
 
     raise HTTPException(status_code=404, detail="Catalogo not found")

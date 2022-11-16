@@ -1,20 +1,16 @@
 from fastapi import APIRouter, HTTPException, Response
 from config.db import conexionDB
-from schemas.laptops_schema import Laptops
+from schemas.laptops_schema import laptops
 from models.laptop_model import Laptop
 from uuid import uuid4 as uuid
 from starlette.status import HTTP_204_NO_CONTENT
 
 laptop = APIRouter()
 
-@laptop.get('/')
-def read_root():
-    return {'mensage': 'Welcome to REST API'}
-
 @laptop.get('/laptops', response_model=list[Laptop], tags=["laptops"])
 def get_laptops():
     conexion = conexionDB()
-    resultSet = conexion.execute(Laptops.select()).fetchall()
+    resultSet = conexion.execute(laptops.select()).fetchall()
     conexion.close()
     return resultSet
 
@@ -23,8 +19,8 @@ def get_laptops():
 def add_laptop(laptop: Laptop):
     laptop.idRegistro = str(uuid())
     conexion = conexionDB()
-    result = conexion.execute(Laptops.insert().values(laptop.dict()))
-    lap = conexion.execute(Laptops.select().where(Laptops.c.idRegistro == laptop.idRegistro)).first()
+    result = conexion.execute(laptops.insert().values(laptop.dict()))
+    lap = conexion.execute(laptops.select().where(laptops.c.idRegistro == laptop.idRegistro)).first()
     conexion.close()
     return lap
 
@@ -32,7 +28,7 @@ def add_laptop(laptop: Laptop):
 @laptop.get('/laptop/{laptop_id}', response_model=Laptop, tags=["laptops"])
 def get_laptop(laptop_id: str):
     conexion = conexionDB()
-    result = conexion.execute(Laptops.select().where(Laptops.c.idRegistro == laptop_id)).first()
+    result = conexion.execute(laptops.select().where(laptops.c.idRegistro == laptop_id)).first()
     conexion.close()
     if result:
         return result
@@ -42,7 +38,7 @@ def get_laptop(laptop_id: str):
 @laptop.delete('/laptop/{laptop_id}', status_code=HTTP_204_NO_CONTENT, tags=["laptops"])
 def delete_laptop(laptop_id: str):
     conexion = conexionDB()
-    result = conexion.execute(Laptops.delete().where(Laptops.c.idRegistro == laptop_id))
+    result = conexion.execute(laptops.delete().where(laptops.c.idRegistro == laptop_id))
     conexion.close()
     if result:
         return Response(status_code=HTTP_204_NO_CONTENT)
@@ -50,18 +46,18 @@ def delete_laptop(laptop_id: str):
     raise HTTPException(status_code=404, detail="Laptop not found")
 
 @laptop.put('/laptop/{laptop_id}', response_model=Laptop, tags=["laptops"])
-def update_laptop(laptop_id: str, laptopUpdate: Laptop):
+def update_laptop(laptop_id: str, laptop_actualizada: Laptop):
     conexion = conexionDB()
-    result = conexion.execute(Laptops.update().values(idRegistro = laptop_id,
-    modelo = laptopUpdate.modelo,
-    memoriaRam = laptopUpdate.memoriaRam,
-    tarjetaVideo = laptopUpdate.tarjetaVideo,
-    pantalla = laptopUpdate.pantalla,
-    almacenamiento = laptopUpdate.almacenamiento,
-    procesador = laptopUpdate.procesador).where(Laptops.c.idRegistro == laptop_id))
+    result = conexion.execute(laptops.update().values(idRegistro = laptop_id,
+    modelo = laptop_actualizada.modelo,
+    memoriaRam = laptop_actualizada.memoriaRam,
+    tarjetaVideo = laptop_actualizada.tarjetaVideo,
+    pantalla = laptop_actualizada.pantalla,
+    almacenamiento = laptop_actualizada.almacenamiento,
+    procesador = laptop_actualizada.procesador).where(laptops.c.idRegistro == laptop_id))
     conexion.close()
     if result:
-        laptopUpdate.idRegistro = laptop_id
-        return laptopUpdate.dict()
+        laptop_actualizada.idRegistro = laptop_id
+        return laptop_actualizada.dict()
 
     raise HTTPException(status_code=404, detail="Laptop not found")

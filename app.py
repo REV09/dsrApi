@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from routes.laptop_routes import laptop
-from routes.memoriaRam_routes import memoriaRam
+from routes.memoriaRam_routes import memoria_ram
 from routes.catalogo_routes import catalogo
 from routes.procesador_rutas import procesador
 from routes.tarjeta_de_video_rutas import tarjeta_video
@@ -57,7 +57,7 @@ app = FastAPI(
 )
 
 app.include_router(laptop)
-app.include_router(memoriaRam)
+app.include_router(memoria_ram)
 app.include_router(catalogo)
 app.include_router(procesador)
 app.include_router(tarjeta_video)

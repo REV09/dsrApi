@@ -6,10 +6,10 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 almacenamiento = APIRouter()
 
-@almacenamiento.get('/almacenamiento/{idRegistro}', response_model=Almacenamiento, tags=['Almacenamiento'])
-def get_almacenamiento(idRegistro: str):
+@almacenamiento.get('/almacenamiento/{id_registro}', response_model=Almacenamiento, tags=['Almacenamiento'])
+def get_almacenamiento(id_registro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(almacenamientos.select().where(almacenamientos.c.idRegistro == idRegistro)).first()
+    resultado = conexion.execute(almacenamientos.select().where(almacenamientos.c.idRegistro == id_registro)).first()
     conexion.close()
     if resultado:
         return resultado
@@ -22,26 +22,26 @@ def add_almacenamiento(almacenamiento: Almacenamiento):
     if resultado:
         return almacenamiento.dict()
 
-@almacenamiento.delete('/almacenamiento/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Almacenamiento'])
-def delete_almacenamiento(idRegistro: str):
+@almacenamiento.delete('/almacenamiento/{id_registro}', status_code=HTTP_204_NO_CONTENT, tags=['Almacenamiento'])
+def delete_almacenamiento(id_registro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(almacenamientos.delete().where(almacenamientos.c.idRegistro == idRegistro))
+    resultado = conexion.execute(almacenamientos.delete().where(almacenamientos.c.idRegistro == id_registro))
     conexion.close()
     if resultado:
         return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail='Almacenamiento no encontrado')
 
-@almacenamiento.put('/almacenamiento/{idRegistro}', response_model=Almacenamiento, tags=['Almacenamiento'])
-def update_almacenamiento(almacenamiento_id: str, almacenamientoActualizado: Almacenamiento):
+@almacenamiento.put('/almacenamiento/{id_registro}', response_model=Almacenamiento, tags=['Almacenamiento'])
+def update_almacenamiento(almacenamiento_id: str, almacenamiento_actualizado: Almacenamiento):
     conexion = conexionDB()
     resultado = conexion.execute(almacenamientos.update().values(
         idRegistro = almacenamiento_id,
-        tipoAlmacenamiento = almacenamientoActualizado.tipoAlmacenamiento
+        tipoAlmacenamiento = almacenamiento_actualizado.tipoAlmacenamiento
     ).where(almacenamientos.c.idRegistro == almacenamiento_id))
     conexion.close()
     if resultado:
-        almacenamientoActualizado.idRegistro = almacenamiento_id
-        return almacenamientoActualizado.dict()
+        almacenamiento_actualizado.idRegistro = almacenamiento_id
+        return almacenamiento_actualizado.dict()
 
     raise HTTPException(status_code=404, detail='Almacenamiento no encontrado')
