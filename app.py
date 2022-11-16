@@ -3,7 +3,7 @@ from routes.laptop_routes import laptop
 from routes.memoriaRam_routes import memoriaRam
 from routes.catalogo_routes import catalogo
 from routes.procesador_rutas import procesador
-from routes.tarjeta_de_video_rutas import tarjetaVideo
+from routes.tarjeta_de_video_rutas import tarjeta_video
 from routes.pantalla_rutas import pantalla
 from routes.almacenamiento_rutas import almacenamiento
 from routes.hdd_rutas import hdd
@@ -60,7 +60,7 @@ app.include_router(laptop)
 app.include_router(memoriaRam)
 app.include_router(catalogo)
 app.include_router(procesador)
-app.include_router(tarjetaVideo)
+app.include_router(tarjeta_video)
 app.include_router(pantalla)
 app.include_router(almacenamiento)
 app.include_router(hdd)

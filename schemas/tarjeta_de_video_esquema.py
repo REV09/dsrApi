@@ -4,7 +4,7 @@ from config.db import motor
 
 meta = MetaData()
 
-tarjetasVideo = Table('tarjetavideo', meta,
+tarjetas_video = Table('tarjetavideo', meta,
                 Column('idRegistro', String(50), primary_key=True),
                 Column('modelo', String(45)),
                 Column('marca', String(45)),

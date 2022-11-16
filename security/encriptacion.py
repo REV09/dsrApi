@@ -18,7 +18,7 @@ def cargar_llave():
 
     return open("security/secret.key", "rb").read()
 
-def encriptar_mensaje(mensaje: str, llaveEncriptacion: bytes):
+def encriptar_mensaje(mensaje: str, llave_encriptacion: bytes):
     
     '''
     permite encriptar el mensaje que reciba como argumento
@@ -26,17 +26,17 @@ def encriptar_mensaje(mensaje: str, llaveEncriptacion: bytes):
     '''
 
     mensaje_codificado = mensaje.encode()
-    encriptado_fernet = Fernet(llaveEncriptacion)
+    encriptado_fernet = Fernet(llave_encriptacion)
     mensaje_encriptado = encriptado_fernet.encrypt(mensaje_codificado)
     return mensaje_encriptado
 
-def desencriptar_mensaje(mensajeEncriptado: bytes, llaveDesencriptado: bytes):
+def desencriptar_mensaje(mensaje_encriptado: bytes, llave_desencriptado: bytes):
 
     '''
     Desencripta el mensaje siempre y cuando 
     la llave de encriptado sea la correcta
     '''
 
-    encriptado_fernet = Fernet(llaveDesencriptado)
-    mensaje_desencriptado = encriptado_fernet.decrypt(mensajeEncriptado).decode()
+    encriptado_fernet = Fernet(llave_desencriptado)
+    mensaje_desencriptado = encriptado_fernet.decrypt(mensaje_encriptado).decode()
     return mensaje_desencriptado

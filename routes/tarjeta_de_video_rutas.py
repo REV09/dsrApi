@@ -1,41 +1,41 @@
 from fastapi import APIRouter, Response, HTTPException
 from models.tarjeta_de_video_modelo import TarjetaVideo
 from config.db import conexionDB
-from schemas.tarjeta_de_video_esquema import tarjetasVideo
+from schemas.tarjeta_de_video_esquema import tarjetas_video
 from starlette.status import HTTP_204_NO_CONTENT
 
-tarjetaVideo = APIRouter()
+tarjeta_video = APIRouter()
 
-@tarjetaVideo.get('/tarjetaDeVideo/{idRegistro}', response_model=TarjetaVideo, tags=['Tarjeta de video'])
-def get_tarjetaVideo(idRegistro: str):
+@tarjeta_video.get('/tarjetaDeVideo/{id_registro}', response_model=TarjetaVideo, tags=['Tarjeta de video'])
+def get_tarjetaVideo(id_registro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(tarjetasVideo.select().where(tarjetasVideo.c.idRegistro == idRegistro)).first()
+    resultado = conexion.execute(tarjetas_video.select().where(tarjetas_video.c.idRegistro == id_registro)).first()
     conexion.close()
     if resultado:
         return resultado
 
-@tarjetaVideo.post('/tarjetaDeVideo/', response_model=TarjetaVideo, tags=['Tarjeta de video'])
-def add_tarjetaVideo(tarjetaVideo: TarjetaVideo):
+@tarjeta_video.post('/tarjetaDeVideo/', response_model=TarjetaVideo, tags=['Tarjeta de video'])
+def add_tarjetaVideo(tarjeta_Video: TarjetaVideo):
     conexion = conexionDB()
-    resultado = conexion.execute(tarjetasVideo.insert().values(tarjetaVideo.dict()))
+    resultado = conexion.execute(tarjetas_video.insert().values(tarjeta_Video.dict()))
     conexion.close()
     if resultado:
-        return tarjetaVideo.dict()
+        return tarjeta_Video.dict()
 
-@tarjetaVideo.delete('/tarjetaDeVideo/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Tarjeta de video'])
-def delete_tarjetaVideo(idRegistro: str):
+@tarjeta_video.delete('/tarjetaDeVideo/{id_registro}', status_code=HTTP_204_NO_CONTENT, tags=['Tarjeta de video'])
+def delete_tarjetaVideo(id_registro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(tarjetasVideo.delete().where(tarjetasVideo.c.idRegistro == idRegistro))
+    resultado = conexion.execute(tarjetas_video.delete().where(tarjetas_video.c.idRegistro == id_registro))
     conexion.close()
     if resultado:
         return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail='Tarjeta de video no encontrada')
 
-@tarjetaVideo.put('/tarjetaDeVideo/{idRegistro}', response_model=TarjetaVideo, tags=['Tarjeta de video'])
+@tarjeta_video.put('/tarjetaDeVideo/{id_registro}', response_model=TarjetaVideo, tags=['Tarjeta de video'])
 def update_tarjetaVideo(tarjeta_id: str, tarjetaActualizada: TarjetaVideo):
     conexion = conexionDB()
-    resultado = conexion.execute(tarjetasVideo.update().values(
+    resultado = conexion.execute(tarjetas_video.update().values(
         idRegistro = tarjeta_id,
         modelo = tarjetaActualizada.modelo,
         marca = tarjetaActualizada.marca,
@@ -44,7 +44,7 @@ def update_tarjetaVideo(tarjeta_id: str, tarjetaActualizada: TarjetaVideo):
         bits = tarjetaActualizada.bits,
         velocidadReloj = tarjetaActualizada.velocidadReloj,
         tipo = tarjetaActualizada.tipo
-    ).where(tarjetasVideo.c.idRegistro == tarjeta_id))
+    ).where(tarjetas_video.c.idRegistro == tarjeta_id))
     conexion.close()
     if resultado:
         tarjetaActualizada.idRegistro = tarjeta_id
