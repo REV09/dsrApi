@@ -14,39 +14,39 @@ def add_pantalla(pantalla: Pantalla):
     if resultado:
         return pantalla.dict()
 
-@pantalla.get('/pantalla/{idRegistro}', response_model=Pantalla, tags=['Pantalla'])
-def get_pantalla(idRegistro: str):
+@pantalla.get('/pantalla/{id_registro}', response_model=Pantalla, tags=['Pantalla'])
+def get_pantalla(id_registro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(pantallas.select().where(pantallas.c.idRegistro == idRegistro)).first()
+    resultado = conexion.execute(pantallas.select().where(pantallas.c.idRegistro == id_registro)).first()
     conexion.close()
     if resultado:
         return resultado
 
-@pantalla.delete('/pantalla/{idRegistro}', status_code=HTTP_204_NO_CONTENT, tags=['Pantalla'])
-def delete_pantalla(idRegistro: str):
+@pantalla.delete('/pantalla/{id_registro}', status_code=HTTP_204_NO_CONTENT, tags=['Pantalla'])
+def delete_pantalla(id_registro: str):
     conexion = conexionDB()
-    resultado = conexion.execute(pantallas.delete().where(pantallas.c.idRegistro == idRegistro))
+    resultado = conexion.execute(pantallas.delete().where(pantallas.c.idRegistro == id_registro))
     conexion.close()
     if resultado:
         return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail='pantalla no encontrada')
 
-@pantalla.put('/pantalla/{idRegistro}', response_model=Pantalla, tags=['Pantalla'])
-def update_pantalla(pantalla_id: str, pantallaActualizada: Pantalla):
+@pantalla.put('/pantalla/{id_registro}', response_model=Pantalla, tags=['Pantalla'])
+def update_pantalla(pantalla_id: str, pantalla_actualizada: Pantalla):
     conexion = conexionDB()
     resultado = conexion.execute(pantallas.update().values(
         idRegistro = pantalla_id,
-        modelo = pantallaActualizada.modelo,
-        resolucion = pantallaActualizada.resolucion,
-        calidad = pantallaActualizada.calidad,
-        tipoPantalla = pantallaActualizada.tipoPantalla,
-        tamanio = pantallaActualizada.tamanio,
-        frecuenciaRefresco = pantallaActualizada.frecuenciaRefresco
+        modelo = pantalla_actualizada.modelo,
+        resolucion = pantalla_actualizada.resolucion,
+        calidad = pantalla_actualizada.calidad,
+        tipoPantalla = pantalla_actualizada.tipoPantalla,
+        tamanio = pantalla_actualizada.tamanio,
+        frecuenciaRefresco = pantalla_actualizada.frecuenciaRefresco
     ).where(pantallas.c.idRegistro == pantalla_id))
     conexion.close()
     if resultado:
-        pantallaActualizada.idRegistro = pantalla_id
-        return pantallaActualizada.dict()
+        pantalla_actualizada.idRegistro = pantalla_id
+        return pantalla_actualizada.dict()
 
     raise HTTPException(status_code=404, detail='pantalla no encontrada')
