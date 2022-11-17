@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Response, HTTPException
 from config.db import conexionDB
-from schemas.catalogo_schema import catalogos
+from schemas.catalogo_esquema import catalogos
 from models.catalogo_model import Catalogo
 from starlette.status import HTTP_204_NO_CONTENT
 

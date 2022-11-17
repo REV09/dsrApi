@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Response
 from config.db import conexionDB
-from schemas.memoria_ram_schema import memoria_rams
+from schemas.memoria_ram_esquema import memoria_rams
 from models.memoriaRam_model import MemoriaRam
 from starlette.status import HTTP_204_NO_CONTENT
 

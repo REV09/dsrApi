@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Response
 from config.db import conexionDB
-from schemas.laptops_schema import laptops
+from schemas.laptops_esquema import laptops
 from models.laptop_model import Laptop
 from uuid import uuid4 as uuid
 from starlette.status import HTTP_204_NO_CONTENT
