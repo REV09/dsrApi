@@ -8,8 +8,8 @@ tarjeta_video = APIRouter()
 
 
 @tarjeta_video.get('/tarjetaDeVideo/{id_registro}',
-                    response_model=TarjetaVideo,
-                    tags=['Tarjeta de video'])
+                   response_model=TarjetaVideo,
+                   tags=['Tarjeta de video'])
 def get_tarjetaVideo(id_registro: str):
     conexion = conexionDB()
     resultado = conexion.execute(tarjetas_video.select().where(
@@ -31,8 +31,8 @@ def add_tarjetaVideo(tarjeta_Video: TarjetaVideo):
 
 
 @tarjeta_video.delete('/tarjetaDeVideo/{id_registro}',
-                        status_code=HTTP_204_NO_CONTENT,
-                        tags=['Tarjeta de video'])
+                      status_code=HTTP_204_NO_CONTENT,
+                      tags=['Tarjeta de video'])
 def delete_tarjetaVideo(id_registro: str):
     conexion = conexionDB()
     resultado = conexion.execute(tarjetas_video.delete().where(
@@ -42,12 +42,12 @@ def delete_tarjetaVideo(id_registro: str):
         return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404,
-    detail='Tarjetade video no encontrada')
+                        detail='Tarjetade video no encontrada')
 
 
 @tarjeta_video.put('/tarjetaDeVideo/{id_registro}',
-                    response_model=TarjetaVideo,
-                    tags=['Tarjeta de video'])
+                   response_model=TarjetaVideo,
+                   tags=['Tarjeta de video'])
 def update_tarjetaVideo(tarjeta_id: str, tarjetaActualizada: TarjetaVideo):
     conexion = conexionDB()
     resultado = conexion.execute(tarjetas_video.update().values(
@@ -66,4 +66,4 @@ def update_tarjetaVideo(tarjeta_id: str, tarjetaActualizada: TarjetaVideo):
         return tarjetaActualizada.dict()
 
     return HTTPException(status_code=404,
-    detail='Tarjeta de video no encontrado')
+                         detail='Tarjeta de video no encontrado')

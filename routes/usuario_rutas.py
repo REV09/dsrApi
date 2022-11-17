@@ -10,7 +10,7 @@ usuario = APIRouter()
 
 
 @usuario.get('/usuario/{nombre_usuario}', response_model=Usuario,
-    tags=["Usuario"])
+             tags=["Usuario"])
 def get_usuario(nombre_usuario: str):
     llave_seguridad = cargar_llave()
     conexion = conexionDB()
@@ -38,7 +38,7 @@ def add_usuario(usuario: Usuario):
 
 
 @usuario.delete('/usuario/{nombre_usuario}', status_code=HTTP_204_NO_CONTENT,
-    tags=["Usuario"])
+                tags=["Usuario"])
 def delete_usuario(nombre_usuario: str):
     conexion = conexionDB()
     resultado = conexion.execute(usuarios.delete().where(
@@ -51,11 +51,11 @@ def delete_usuario(nombre_usuario: str):
 
 
 @usuario.put('/usuario/{nombre_usuario}', response_model=Usuario,
-    tags=['Usuario'])
+             tags=['Usuario'])
 def update_usuario(nombre_usuario_anterior: str, nuevo_usuario: Usuario):
     llave_seguridad = cargar_llave()
     nueva_contrasena = encriptar_mensaje(nuevo_usuario.contrasena,
-        llave_seguridad)
+                                         llave_seguridad)
     conexion = conexionDB()
     resultado = conexion.execute(usuarios.update().values(
         nombreUsuario=nuevo_usuario.nombreUsuario,
