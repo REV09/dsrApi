@@ -14,44 +14,44 @@ app = FastAPI(
     title='Laptop API DSR',
     description='Api de obtencion de informacion de hardware de laptops',
     openapi_tags=[{
-        'name' : 'laptops',
-        'description' : 'laptops routes CRUD'
+        'name': 'laptops',
+        'description': 'laptops routes CRUD'
     },
     {
-        'name' : 'Memoria Ram',
-        'description' : 'Memorias Ram routes CRUD'
+        'name': 'Memoria Ram',
+        'description': 'Memorias Ram routes CRUD'
     },
     {
-        'name' : 'Catalogo',
-        'description' : 'Catalogo routes CRUD'
+        'name': 'Catalogo',
+        'description': 'Catalogo routes CRUD'
     },
     {
-        'name' : 'Procesador',
-        'description' : 'Procesador routes CRUD'
+        'name': 'Procesador',
+        'description': 'Procesador routes CRUD'
     },
     {
-        'name' : 'Tarjeta de video',
-        'description' : 'Tarjeta de video routes CRUD'
+        'name': 'Tarjeta de video',
+        'description': 'Tarjeta de video routes CRUD'
     },
     {
-        'name' : 'Pantalla',
-        'description' : 'Pantalla routes CRUD'
+        'name': 'Pantalla',
+        'description': 'Pantalla routes CRUD'
     },
     {
-        'name' : 'Almacenamiento',
-        'description' : 'Almacenamiento routes CRUD'
+        'name': 'Almacenamiento',
+        'description': 'Almacenamiento routes CRUD'
     },
     {
-        'name' : 'HDD',
-        'description' : 'HDD routes CRUD'
+        'name': 'HDD',
+        'description': 'HDD routes CRUD'
     },
     {
-        'name' : 'SSD',
-        'description' : 'SSD routes CRUD'
+        'name': 'SSD',
+        'description': 'SSD routes CRUD'
     },
     {
-        'name' : 'Usuario',
-        'description' : 'Usuario routes CRUD'
+        'name': 'Usuario',
+        'description': 'Usuario routes CRUD'
     }
     ]
 )
