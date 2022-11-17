@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Response, HTTPException
 from config.db import conexionDB
 from schemas.almacenamiento_esquema import almacenamientos
-from models.almacenamiento_model import Almacenamiento
+from models.almacenamiento_modelo import Almacenamiento
 from starlette.status import HTTP_204_NO_CONTENT
 
 almacenamiento = APIRouter()

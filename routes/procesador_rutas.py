@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Response, HTTPException
-from models.procesador_model import Procesador
+from models.procesador_modelo import Procesador
 from config.db import conexionDB
 from schemas.procesador_esquema import procesadores
 from starlette.status import HTTP_204_NO_CONTENT
