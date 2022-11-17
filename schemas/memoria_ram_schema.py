@@ -4,7 +4,7 @@ from config.db import motor
 
 meta = MetaData()
 
-memoriasRam = Table("memoriaram", meta,
+memoria_rams = Table("memoriaram", meta,
     Column("idRegistro", String(40), primary_key=True),
     Column("modelo", String(45)),
     Column("marca", String(20)),
