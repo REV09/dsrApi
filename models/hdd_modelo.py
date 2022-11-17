@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Hdd(BaseModel):
     idRegistro: str
     marca: str

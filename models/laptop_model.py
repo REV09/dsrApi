@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Laptop(BaseModel):
     idRegistro: str
     modelo: str

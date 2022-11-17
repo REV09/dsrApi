@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class TarjetaVideo(BaseModel):
     idRegistro: str
     modelo: str

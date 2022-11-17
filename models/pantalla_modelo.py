@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Pantalla(BaseModel):
     idRegistro: str
     modelo: str

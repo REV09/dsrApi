@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
+
 class MemoriaRam(BaseModel):
-    idRegistro : str
+    idRegistro: str
     modelo: str
     marca: str
     tipoMemoria: str
