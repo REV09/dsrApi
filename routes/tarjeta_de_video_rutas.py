@@ -18,16 +18,21 @@ def get_tarjetaVideo(id_registro: str):
     if resultado:
         return resultado
 
+    raise HTTPException(status_code=404,
+                        detail='Tarjeta de video no encontrada')
+
 
 @tarjeta_video.post('/tarjetaDeVideo/', response_model=TarjetaVideo,
                     tags=['Tarjeta de video'])
-def add_tarjetaVideo(tarjeta_Video: TarjetaVideo):
+def add_tarjetaVideo(tarjeta_video: TarjetaVideo):
     conexion = conexionDB()
     resultado = conexion.execute(tarjetas_video.insert().values(
-        tarjeta_Video.dict()))
+        tarjeta_video.dict()))
     conexion.close()
     if resultado:
-        return tarjeta_Video.dict()
+        return tarjeta_video.dict()
+
+    raise HTTPException(status_code=500, detail='Error del servidor')
 
 
 @tarjeta_video.delete('/tarjetaDeVideo/{id_registro}',
@@ -65,5 +70,5 @@ def update_tarjetaVideo(tarjeta_id: str, tarjetaActualizada: TarjetaVideo):
         tarjetaActualizada.idRegistro = tarjeta_id
         return tarjetaActualizada.dict()
 
-    return HTTPException(status_code=404,
+    raise HTTPException(status_code=404,
                          detail='Tarjeta de video no encontrado')

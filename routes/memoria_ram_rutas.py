@@ -15,6 +15,8 @@ def add_memoriaRam(memoria: MemoriaRam):
     if result:
         return memoria.dict()
 
+    raise HTTPException(status_code=500, detail="Memoria ram no encontrada")
+
 
 @memoria_ram.get('/memoria/{id_registro}', response_model=MemoriaRam,
                  tags=['Memoria Ram'])
@@ -26,6 +28,8 @@ def get_memoriaRam(id_registro: str):
     if result:
         return result
 
+    raise HTTPException(status_code=404, detail="Memoria ram no encontrada")
+
 
 @memoria_ram.delete('/memoria/{id_registro}', status_code=HTTP_204_NO_CONTENT,
                     tags=['Memoria Ram'])
@@ -36,6 +40,8 @@ def delete_memoria(id_registro: str):
     conexion.close()
     if result:
         return Response(status_code=HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=404, detail="Memoria ram no encontrada")
 
 
 @memoria_ram.put('/memoria/{id_registro}', response_model=MemoriaRam,
@@ -57,4 +63,4 @@ def update_memoriaRam(ram_id: str, memoria_ram_actualizada: MemoriaRam):
         memoria_ram_actualizada.idRegistro = ram_id
         return memoria_ram_actualizada.dict()
 
-    raise HTTPException(status_code=404, detail="Memoria Ram not found")
+    raise HTTPException(status_code=404, detail="Memoria ram no encontrada")

@@ -17,6 +17,8 @@ def get_procesador(id_registro: str):
     if resultado:
         return resultado
 
+    raise HTTPException(status_code=404, detail='procesador no encontrado')
+
 
 @procesador.post('/procesador', response_model=Procesador,
                  tags=['Procesador'])
@@ -27,6 +29,8 @@ def add_procesador(procesador: Procesador):
     conexion.close()
     if resultado:
         return procesador.dict()
+    
+    raise HTTPException(status_code=500, detail='Error del servidor')
 
 
 @procesador.delete('/procesador/{id_registro}',

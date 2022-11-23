@@ -18,6 +18,9 @@ def get_almacenamiento(id_registro: str):
     if resultado:
         return resultado
 
+    raise HTTPException(status_code=404,
+                        detail='Almacenamiento no encontrado')
+
 
 @almacenamiento.post('/almacenamiento', response_model=Almacenamiento,
                      tags=['Almacenamiento'])
@@ -28,6 +31,9 @@ def add_almacenamiento(almacenamiento: Almacenamiento):
     conexion.close()
     if resultado:
         return almacenamiento.dict()
+    
+    raise HTTPException(status_code=500,
+                        detail='Error del servidor')
 
 
 @almacenamiento.delete('/almacenamiento/{id_registro}',

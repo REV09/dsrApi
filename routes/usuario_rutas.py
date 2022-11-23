@@ -23,6 +23,8 @@ def get_usuario(nombre_usuario: str):
             usuario_obtenido['contrasena'], llave_seguridad)
         return usuario_obtenido
 
+    raise HTTPException(status_code=404, detail='Usuario no encontrado')
+
 
 @usuario.post('/usuario', response_model=Usuario, tags=["Usuario"])
 def add_usuario(usuario: Usuario):
@@ -35,6 +37,8 @@ def add_usuario(usuario: Usuario):
     conexion.close()
     if resultado:
         return usuario.dict()
+    
+    raise HTTPException(status_code=500, detail='Error de servidor')
 
 
 @usuario.delete('/usuario/{nombre_usuario}', status_code=HTTP_204_NO_CONTENT,
@@ -69,4 +73,4 @@ def update_usuario(nombre_usuario_anterior: str, nuevo_usuario: Usuario):
     if resultado:
         return nuevo_usuario.dict()
 
-    return HTTPException(status_code=404, detail='Usuario no encontrado')
+    raise HTTPException(status_code=404, detail='Usuario no encontrado')

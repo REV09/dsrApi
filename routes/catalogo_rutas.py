@@ -13,7 +13,10 @@ def get_catalogos():
     conexion = conexionDB()
     resultados = conexion.execute(catalogos.select()).fetchall()
     conexion.close()
-    return resultados
+    if resultados:
+        return resultados
+
+    raise HTTPException(status_code=500, detail="Error del servidor")
 
 
 @catalogo.get('/catalogo/{id_registro}', response_model=Catalogo,
@@ -26,6 +29,8 @@ def get_catalogo(id_registro: str):
     if resultado:
         return resultado
 
+    raise HTTPException(status_code=404, detail="catalogo no encontrado")
+
 
 @catalogo.post('/catalogo', response_model=Catalogo, tags=["Catalogo"])
 def add_catalogo(registro: Catalogo):
@@ -34,6 +39,8 @@ def add_catalogo(registro: Catalogo):
     conexion.close()
     if result:
         return registro.dict()
+    
+    raise HTTPException(status_code=500, detail="Error del servidor")
 
 
 @catalogo.delete('/catalogo/{id_registro}', status_code=HTTP_204_NO_CONTENT,

@@ -11,51 +11,71 @@ laptop = APIRouter()
 @laptop.get('/laptops', response_model=list[Laptop], tags=["laptops"])
 def get_laptops():
     conexion = conexionDB()
-    resultSet = conexion.execute(laptops.select()).fetchall()
+    conjunto_resultado = conexion.execute(laptops.select()).fetchall()
     conexion.close()
-    return resultSet
+    if conjunto_resultado:
+        return conjunto_resultado
+
+    raise HTTPException(status_code=500, detail="Error del servidor")
 
 
 @laptop.post('/laptop', response_model=Laptop, tags=["laptops"])
 def add_laptop(laptop: Laptop):
     laptop.idRegistro = str(uuid())
     conexion = conexionDB()
-    result = conexion.execute(laptops.insert().values(laptop.dict()))
+    resultado = conexion.execute(laptops.insert().values(laptop.dict()))
     lap = conexion.execute(laptops.select().where(
         laptops.c.idRegistro == laptop.idRegistro)).first()
     conexion.close()
-    return lap
+    if resultado:
+        return lap
+    
+    raise HTTPException(status_code=500, detail="Error del servidor")
+
 
 
 @laptop.get('/laptop/{laptop_id}', response_model=Laptop, tags=["laptops"])
 def get_laptop(laptop_id: str):
     conexion = conexionDB()
-    result = conexion.execute(laptops.select().where(
+    resultado = conexion.execute(laptops.select().where(
         laptops.c.idRegistro == laptop_id)).first()
     conexion.close()
-    if result:
-        return result
+    if resultado:
+        return resultado
 
-    raise HTTPException(status_code=404, detail="Laptop not found")
+    raise HTTPException(status_code=404, detail="Laptop no encontrada")
+
+
+@laptop.get('/laptop/{modelo_laptop}', response_model=list[Laptop],
+            tags=["Laptops"])
+def get_laptops_modelo(modelo_laptop: str):
+    conexion = conexionDB()
+    conjunto_resultado = conexion.execute(laptops.select().where(
+        laptops.c.modelo == modelo_laptop)).fetchall()
+    conexion.close()
+    if conjunto_resultado:
+        return conjunto_resultado
+
+    raise HTTPException(status_code=404, detail="Laptop no encontrada")
 
 
 @laptop.delete('/laptop/{laptop_id}', status_code=HTTP_204_NO_CONTENT,
                tags=["laptops"])
 def delete_laptop(laptop_id: str):
     conexion = conexionDB()
-    result = conexion.execute(laptops.delete().where(
+    resultado = conexion.execute(laptops.delete().where(
         laptops.c.idRegistro == laptop_id))
     conexion.close()
-    if result:
+    if resultado:
         return Response(status_code=HTTP_204_NO_CONTENT)
 
-    raise HTTPException(status_code=404, detail="Laptop not found")
+    raise HTTPException(status_code=404, detail="Laptop no encontrada")
 
 
 @laptop.put('/laptop/{laptop_id}', response_model=Laptop, tags=["laptops"])
 def update_laptop(laptop_id: str, laptop_actualizada: Laptop):
     conexion = conexionDB()
-    result = conexion.execute(laptops.update().values(
+    resultado = conexion.execute(laptops.update().values(
         idRegistro=laptop_id,
         modelo=laptop_actualizada.modelo,
         memoriaRam=laptop_actualizada.memoriaRam,
@@ -65,8 +85,8 @@ def update_laptop(laptop_id: str, laptop_actualizada: Laptop):
         procesador=laptop_actualizada.procesador).where(
             laptops.c.idRegistro == laptop_id))
     conexion.close()
-    if result:
+    if resultado:
         laptop_actualizada.idRegistro = laptop_id
         return laptop_actualizada.dict()
 
-    raise HTTPException(status_code=404, detail="Laptop not found")
+    raise HTTPException(status_code=404, detail="Laptop no encontrada")

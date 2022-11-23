@@ -15,6 +15,8 @@ def add_pantalla(pantalla: Pantalla):
     conexion.close()
     if resultado:
         return pantalla.dict()
+    
+    raise HTTPException(status_code=500, detail='Error del servidor')
 
 
 @pantalla.get('/pantalla/{id_registro}', response_model=Pantalla,
@@ -26,6 +28,8 @@ def get_pantalla(id_registro: str):
     conexion.close()
     if resultado:
         return resultado
+
+    raise HTTPException(status_code=404, detail='pantalla no encontrada')
 
 
 @pantalla.delete('/pantalla/{id_registro}',

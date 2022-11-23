@@ -16,6 +16,8 @@ def get_ssd(id_registro: str):
     if resultado:
         return resultado
 
+    raise HTTPException(status_code=404, detail='SSD no encontrado')
+
 
 @ssd.post('/ssd', response_model=Ssd, tags=['SSD'])
 def add_ssd(ssd: Ssd):
@@ -24,6 +26,8 @@ def add_ssd(ssd: Ssd):
     conexion.close()
     if resultado:
         return ssd.dict()
+
+    raise HTTPException(status_code=500, detail='Error del servidor')
 
 
 @ssd.delete('/ssd/{id_registro}',
@@ -60,4 +64,4 @@ def update_ssd(ssd_id: str, ssd_actualizado: Ssd):
         ssd_actualizado.idRegistro = ssd_id
         return ssd_actualizado.dict()
 
-    return HTTPException(status_code=404, detail='SSD no encontrado')
+    raise HTTPException(status_code=404, detail='SSD no encontrado')

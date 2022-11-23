@@ -16,6 +16,8 @@ def get_hdd(id_registro: str):
     if resultado:
         return resultado
 
+    raise HTTPException(status_code=404, detail='HDD no encontrado')
+
 
 @hdd.post('/hdd', response_model=Hdd, tags=['HDD'])
 def add_hdd(hdd: Hdd):
@@ -24,6 +26,8 @@ def add_hdd(hdd: Hdd):
     conexion.close()
     if resultado:
         return hdd.dict()
+
+    raise HTTPException(status_code=500, detail='Error del servidor')
 
 
 @hdd.delete('/hdd/{id_registro}', status_code=HTTP_204_NO_CONTENT,
@@ -57,4 +61,4 @@ def update_hdd(hdd_id: str, hdd_actualizado: Hdd):
         hdd_actualizado.idRegistro = hdd_id
         return hdd_actualizado.dict()
 
-    return HTTPException(status_code=404, detail='HDD no encontrado')
+    raise HTTPException(status_code=404, detail='HDD no encontrado')
