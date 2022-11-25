@@ -47,7 +47,7 @@ def get_laptop(laptop_id: str):
 
 
 @laptop.get('/laptop/{modelo_laptop}', response_model=list[Laptop],
-            tags=["Laptops"])
+            tags=["laptops"])
 def get_laptops_modelo(modelo_laptop: str):
     conexion = conexionDB()
     conjunto_resultado = conexion.execute(laptops.select().where(
