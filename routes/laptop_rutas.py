@@ -46,13 +46,14 @@ def get_laptop(laptop_id: str):
     raise HTTPException(status_code=404, detail="Laptop no encontrada")
 
 
-@laptop.get('/laptop/{modelo_laptop}', response_model=list[Laptop],
+@laptop.get('/laptopModelo/{modelo_laptop}', response_model=list[Laptop],
             tags=["laptops"])
 def get_laptops_modelo(modelo_laptop: str):
     conexion = conexionDB()
     conjunto_resultado = conexion.execute(laptops.select().where(
         laptops.c.modelo == modelo_laptop)).fetchall()
     conexion.close()
+    print(conjunto_resultado)
     if conjunto_resultado:
         return conjunto_resultado
 
