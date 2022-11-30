@@ -25,6 +25,21 @@ def get_usuario(nombre_usuario: str):
 
     raise HTTPException(status_code=404, detail='Usuario no encontrado')
 
+@usuario.get('/usuario/correo/{correo_electronico}', response_model=Usuario,
+             tags=["Usuario"])
+def get_usuario_by_email(correo_electronico: str):
+    llave_seguridad = cargar_llave()
+    conexion = conexionDB()
+    resultado = conexion.execute(usuarios.select().where(
+        usuarios.c.correoElectronico == correo_electronico)).first()
+    conexion.close()
+    if resultado:
+        usuario_obtenido = dict(resultado)
+        usuario_obtenido["contrasena"] = desencriptar_mensaje(
+            usuario_obtenido['contrasena'], llave_seguridad)
+        return usuario_obtenido
+
+    raise HTTPException(status_code=404, detail='Usuario no encontrado')
 
 @usuario.post('/usuario', response_model=Usuario, tags=["Usuario"])
 def add_usuario(usuario: Usuario):
