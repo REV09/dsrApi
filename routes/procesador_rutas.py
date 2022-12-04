@@ -10,6 +10,18 @@ procesador = APIRouter()
 @procesador.get('/procesador/{id_registro}',
                 response_model=Procesador, tags=['Procesador'])
 def get_procesador(id_registro: str):
+
+    '''
+    Realiza la conexion con la base de datos para obtener los
+    detalles del procesador de una laptop mediante el id
+    de registro, recibe el id de registro para realizar su 
+    tarea de busqueda y retorno de informacion
+
+    En el caso de no encontrar lo solicitado retorna un codigo
+    de error HTTP 404 que significa que no encontro el
+    procesador solicitado
+    '''
+
     conexion = conexionDB()
     resultado = conexion.execute(procesadores.select().where(
         procesadores.c.idRegistro == id_registro)).first()
@@ -23,6 +35,23 @@ def get_procesador(id_registro: str):
 @procesador.post('/procesador', response_model=Procesador,
                  tags=['Procesador'])
 def add_procesador(procesador: Procesador):
+
+    '''
+    Realiza la conexion con la base de datos para agregar los
+    detalles del procesador de una laptop asociandolos 
+    mediante el id de registro de la laptop ya existente, 
+    recibe un objeto de tipo Procesador el cual contiene
+    el id de registro con el que se asociara
+
+    En el caso de no completar lo solicitado retorna un codigo
+    de error HTTP 500 que significa que ocurrio un error en el
+    servidor y no pudo completar la tarea
+
+    En el caso contrario retornara un codigo HTTP 200 que
+    significa tarea completada con extio y retornara los datos
+    del procesador registrado en la base de datos
+    '''
+
     conexion = conexionDB()
     resultado = conexion.execute(procesadores.insert().values(
         procesador.dict()))
@@ -36,6 +65,20 @@ def add_procesador(procesador: Procesador):
 @procesador.delete('/procesador/{id_registro}',
                    status_code=HTTP_204_NO_CONTENT, tags=['Procesador'])
 def delete_procesador(id_registro: str):
+
+    '''
+    Realiza la conexion con la base de datos con la peticion de
+    eliminar de esta misma el procesador especificado mediante
+    el id de registro
+
+    Si el procesador es eliminado correctamente este metodo
+    retornara un HTTP 204 especificando que la tarea se completo
+    de manera exitosa y no hay contenido que mostrar
+
+    En caso de no completarse con exito se retornara un HTTP 404
+    especificando que no se encontro el procesador a eliminar
+    '''
+
     conexion = conexionDB()
     resultado = conexion.execute(procesadores.delete().where(
         procesadores.c.idRegistro == id_registro))
@@ -49,6 +92,23 @@ def delete_procesador(id_registro: str):
 @procesador.put('/procesador/{id_registro}', response_model=Procesador,
                 tags=['Procesador'])
 def update_procesador(procesador_id: str, procesador_actualizado: Procesador):
+
+    '''
+    Realiza la actualizacion de datos del procesador especificado
+    mediante el id de registro de la base de datos.
+    Recibe primero el id de registro del procesador que a su vez
+    es el id de registro de la laptop con la que guarda relacion
+    seguido de eso recibe un objeto de tipo Procesador el cual es
+    el procesador con los datos actualizados
+
+    Si el procesador es actualizado correctamente este metodo
+    retornara un HTTP 200 especificando que la tarea se completo
+    de manera exitosa y retorna la nueva informacion del procesador
+
+    En caso de no completarse con exito se retornara un HTTP 404
+    especificando que no se encontro el procesador a actualizar
+    '''
+
     conexion = conexionDB()
     resultado = conexion.execute(procesadores.update().values(
         idRegistro=procesador_id,

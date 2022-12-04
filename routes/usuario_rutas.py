@@ -12,6 +12,18 @@ usuario = APIRouter()
 @usuario.get('/usuario/{nombre_usuario}', response_model=Usuario,
              tags=["Usuario"])
 def get_usuario(nombre_usuario: str):
+
+    '''
+    Realiza la conexion con la base de datos para obtener los
+    detalles del usuaro del sistema mediante el nombre de
+    usuario, recibe el nombre de usuario para realizar su 
+    tarea de busqueda y retorno de informacion
+
+    En el caso de no encontrar lo solicitado retorna un codigo
+    de error HTTP 404 que significa que no encontro el
+    usuaro solicitado
+    '''
+
     llave_seguridad = cargar_llave()
     conexion = conexionDB()
     resultado = conexion.execute(usuarios.select().where(
@@ -28,6 +40,18 @@ def get_usuario(nombre_usuario: str):
 @usuario.get('/usuario/correo/{correo_electronico}', response_model=Usuario,
              tags=["Usuario"])
 def get_usuario_by_email(correo_electronico: str):
+
+    '''
+    Realiza la conexion con la base de datos para obtener los
+    detalles del usuaro del sistema mediante el correo eletronico
+    del usuario, recibe el correo electronico del usuario para 
+    realizar su tarea de busqueda y retorno de informacion
+
+    En el caso de no encontrar lo solicitado retorna un codigo
+    de error HTTP 404 que significa que no encontro el
+    usuaro solicitado
+    '''
+
     llave_seguridad = cargar_llave()
     conexion = conexionDB()
     resultado = conexion.execute(usuarios.select().where(
@@ -43,6 +67,21 @@ def get_usuario_by_email(correo_electronico: str):
 
 @usuario.post('/usuario', response_model=Usuario, tags=["Usuario"])
 def add_usuario(usuario: Usuario):
+
+    '''
+    Realiza la conexion con la base de datos para agregar los
+    detalles del usuario recibe un objeto de tipo Usuario
+    
+
+    En el caso de no completar lo solicitado retorna un codigo
+    de error HTTP 500 que significa que ocurrio un error en el
+    servidor y no pudo completar la tarea
+
+    En el caso contrario retornara un codigo HTTP 200 que
+    significa tarea completada con extio y retornara los datos
+    del usuario registrado en la base de datos
+    '''
+
     llave_seguridad = cargar_llave()
     nuevo_usuario = usuario.dict()
     nuevo_usuario["contrasena"] = encriptar_mensaje(
@@ -59,6 +98,20 @@ def add_usuario(usuario: Usuario):
 @usuario.delete('/usuario/{nombre_usuario}', status_code=HTTP_204_NO_CONTENT,
                 tags=["Usuario"])
 def delete_usuario(nombre_usuario: str):
+
+    '''
+    Realiza la conexion con la base de datos con la peticion de
+    eliminar de esta misma el usuario especificado mediante
+    el nombre de usuario
+
+    Si el usuario es eliminado correctamente este metodo
+    retornara un HTTP 204 especificando que la tarea se completo
+    de manera exitosa y no hay contenido que mostrar
+
+    En caso de no completarse con exito se retornara un HTTP 404
+    especificando que no se encontro el usuario a eliminar
+    '''
+
     conexion = conexionDB()
     resultado = conexion.execute(usuarios.delete().where(
         usuarios.c.nombreUsuario == nombre_usuario))
@@ -72,6 +125,22 @@ def delete_usuario(nombre_usuario: str):
 @usuario.put('/usuario/{nombre_usuario}', response_model=Usuario,
              tags=['Usuario'])
 def update_usuario(nombre_usuario_anterior: str, nuevo_usuario: Usuario):
+
+    '''
+    Realiza la actualizacion de datos del usuario especificado
+    mediante el nombre de usuario de la base de datos.
+    Recibe primero el nombre de usuario del usuario
+    seguido de eso recibe un objeto de tipo Usuario el cual es
+    el usuario con los datos actualizados
+
+    Si el usuario es actualizado correctamente este metodo
+    retornara un HTTP 200 especificando que la tarea se completo
+    de manera exitosa y retorna la nueva informacion del usuario
+
+    En caso de no completarse con exito se retornara un HTTP 404
+    especificando que no se encontro el usuario a actualizar
+    '''
+
     llave_seguridad = cargar_llave()
     nueva_contrasena = encriptar_mensaje(nuevo_usuario.contrasena,
                                          llave_seguridad)

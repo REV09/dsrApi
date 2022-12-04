@@ -26,6 +26,8 @@ def encriptar_mensaje(mensaje: str, llave_encriptacion: bytes):
     '''
     permite encriptar el mensaje que reciba como argumento
     ademas debe recibir la llave de encriptacion
+    recibe primero el mensaje a encriptar y seguido de eso
+    recibe la llave de encriptacion
     '''
 
     mensaje_codificado = mensaje.encode()
@@ -40,6 +42,8 @@ def desencriptar_mensaje(mensaje_encriptado: bytes,
     '''
     Desencripta el mensaje siempre y cuando
     la llave de encriptado sea la correcta
+    recibe primero el mensaje encriptado y
+    seguido de esto la llave de desencriptado
     '''
 
     encriptado_fernet = Fernet(llave_desencriptado)
