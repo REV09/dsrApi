@@ -9,6 +9,7 @@ from routes.almacenamiento_rutas import almacenamiento
 from routes.hdd_rutas import hdd
 from routes.ssd_rutas import ssd
 from routes.usuario_rutas import usuario
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title='Laptop API DSR',
@@ -54,6 +55,18 @@ app = FastAPI(
         'description': 'Usuario routes CRUD'
     }
     ]
+)
+
+origins = [
+    "https://rev09.github.io/app-web-laptops/#/"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 app.include_router(laptop)
