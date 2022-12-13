@@ -59,6 +59,7 @@ app = FastAPI(
 
 origins = [
     "https://rev09.github.io/app-web-laptops/#/"
+    "https://rev09.github.io"
 ]
 
 app.add_middleware(
